@@ -4,13 +4,13 @@ import css from './ContactList.module.css';
 export const ContactList = ({ contacts, onDeleteContact }) => {
   return (
     <ul className={css.list}>
-      {contacts.map(({ id, name, number }) => {
+      {contacts.map(({ id, name, phone }) => {
         return (
           <ContactItem
             key={id}
             id={id}
             name={name}
-            number={number}
+            phone={phone}
             onDeleteContact={onDeleteContact}
           />
         );

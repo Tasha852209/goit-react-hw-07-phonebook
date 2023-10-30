@@ -1,27 +1,33 @@
+// import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import css from './ContactForm.module.css';
-import { useState } from 'react';
+import { selectItems } from 'redux/selectors';
+// import { useState } from 'react';
+// import { selectItems } from 'redux/selectors';
 
-const INITIAL_FORM_STATE = {
-  name: '',
-  number: '',
-};
+// const INITIAL_FORM_STATE = {
+//   name: '',
+//   phone: '',
+// };
 
 export const ContactForm = ({ addNewContact }) => {
-  const [formData, setFormData] = useState(INITIAL_FORM_STATE);
+  // const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 
-  const handleChange = ({ target: { name, value } }) => {
-    setFormData(prevState => ({ ...prevState, [name]: value }));
-  };
+  const contacts = useSelector(selectItems);
+  // const handleChange = ({ target: { name, value } }) => {
+  //   setFormData(prevState => ({ ...prevState, [name]: value }));
+  // };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    const newContact = {
-      name: formData.name,
-      number: formData.number,
-    };
+    const contactName = e.currentTarget.elements.name.value;
+    const contactPhone = e.currentTarget.elements.phone.value;
+
+    const newContact = { name: contactName, phone: contactPhone };
+
     addNewContact(newContact);
-    setFormData({ name: '', number: '' });
+    e.currentTarget.reset();
   };
 
   return (
@@ -31,8 +37,8 @@ export const ContactForm = ({ addNewContact }) => {
         <input
           type="text"
           name="name"
-          onChange={handleChange}
-          value={formData.name}
+          // onChange={handleChange}
+          value={contacts.name}
           required
         />
       </label>
@@ -40,9 +46,9 @@ export const ContactForm = ({ addNewContact }) => {
         <p>Number</p>
         <input
           type="tel"
-          name="number"
-          onChange={handleChange}
-          value={formData.number}
+          name="phone"
+          // onChange={handleChange}
+          value={contacts.phone}
           required
         />
       </label>

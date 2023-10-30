@@ -1,5 +1,4 @@
 import { ContactForm } from './ContactForm/ContactForm';
-import { nanoid } from 'nanoid';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
@@ -30,13 +29,9 @@ export const App = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
-  const addNewContact = data => {
-    const newContact = {
-      id: nanoid(),
-      ...data,
-    };
-    contacts.some(({ name }) => name === data.name)
-      ? alert(`${data.name} is already in contacts`)
+  const addNewContact = newContact => {
+    contacts.some(({ name }) => name === newContact.name)
+      ? alert(`${newContact.name} is already in contacts`)
       : dispatch(addContact(newContact));
   };
 
@@ -61,7 +56,7 @@ export const App = () => {
       <ContactForm addNewContact={addNewContact}></ContactForm>
       <h2>Contacts</h2>
       <Filter value={filter} handleFilterContacts={handleFilterContacts} />
-      {isLoading && <Loader />}
+      {isLoading && !error && <Loader />}
       {error && <ErrorMessage message={error} />}
       <ContactList
         contacts={getFilterContacts()}

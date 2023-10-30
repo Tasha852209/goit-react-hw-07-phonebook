@@ -1,9 +1,9 @@
 import css from './ContactItem.module.css';
-export const ContactItem = ({ id, name, number, onDeleteContact }) => {
+export const ContactItem = ({ id, name, phone, onDeleteContact }) => {
   return (
     <li key={id}>
       <span>{name}:</span>
-      <span> {number}</span>
+      <span> {phone}</span>
       <button
         className={css.buttonDelete}
         type="button"
